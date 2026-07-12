@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
         }) 
 
         return res.json({
-            msg: "Expence created successfully"
+            msg: "Expense created successfully"
         })
     } catch (err) {
         console.log(err);
@@ -39,17 +39,74 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
+router.get('/export', async (req, res) => {
     try {
-        const transaction = await Expense.find({
+        const transactions = await Expense.find({
             userId: req.userId
         })
-
-        res.json({
-            transaction
+        return res.json({
+            transactions
         })
     } catch (err) {
-        return res.status(409).json({
+        return res.status(500).json({
+            error: 'Something went wrong'
+        })
+    }
+
+})
+
+router.get('/', async (req, res) => {
+    const { type, category, search, sort, page, limit } = req.query;
+    const filter = {
+        userId: req.userId
+    };
+
+    if(type) {
+        filter.type = type;
+    }
+    if(category) {
+        filter.category = category;
+    }
+    if(search) {
+
+        filter.title = {
+            $regex: search, //.charAt(0).toUpperCase() + search.slice(1)
+            $options: "i"
+        }
+    }
+
+    const sortTransaction = {}
+
+    if(sort == 'newest') {
+        sortTransaction.createdAt = -1
+    } else if(sort == 'oldest') {
+        sortTransaction.createdAt = 1
+    } else if(sort == 'highest') {
+        sortTransaction.amount = -1
+    } else if(sort == 'lowest') {
+        sortTransaction.amount = 1
+    } else {
+        sortTransaction.createdAt = -1
+    }
+    const onPage = Math.max(parseInt(page) || 1, 1);
+    const limitTransaction = Math.min(Math.max(parseInt(limit) || 5, 5), 100);
+
+    const skipTransaction = ( onPage - 1 ) * limitTransaction;
+
+    try {
+        const filteredTransaction = await Expense.find(filter).sort(sortTransaction).skip(skipTransaction).limit(limitTransaction);
+        const totalTransactions = await Expense.countDocuments(filter)
+        const totalPages = Math.ceil(totalTransactions / limitTransaction);
+        return res.json({
+            filteredTransaction,
+            page: onPage,
+            limit: limitTransaction,
+            count: filteredTransaction.length,
+            totalPages,
+            totalTransactions
+        })
+    } catch (err) {
+        return res.status(500).json({
             error: "Something went wrong"
         })
     }
