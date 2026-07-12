@@ -1,6 +1,8 @@
+import AuthForm from "../components/forms/AuthForm";
+
 const Authentication = ({action}) => {
     return (
-        <div>Authentication( {action} )</div>
+        <AuthForm action={action}/>
     )
 }
 
