@@ -1,0 +1,62 @@
+import { useState } from 'react';
+import InputBox from '../components/ui/InputBox'
+import Button from '../components/ui/Button'
+import api from '../services/api';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+
+const Signup = () => {
+    const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastname] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const notify = () => toast.success("User created successfully!");
+    const notifyField = () => toast.error("Something's up!")
+
+    const handleSubmit = async () => {
+        try {
+            const res = await api.post('/user/signup', {
+                username,
+                firstName,
+                lastName,
+                password
+            })
+            .then(() => {
+                notify();
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('username', res.data.firstName);
+                navigate('/');
+            })
+        } catch (err) {
+            notifyField();
+            console.log(err);
+
+        }
+        
+    }
+
+    return (
+        <div className="flex justify-center items-center w-full h-screen">
+            <div className="p-20 rounded-lg border border-slate-200 shadow-xs text-center flex flex-col gap-5">
+                <div>
+                    <div className="text-2xl font-bold">Signup</div>
+                    <div className="text-slate-600">Signup to proceed</div>
+                </div>
+                <div className='flex flex-col gap-3'>
+                    <InputBox placeholder={"Email"} onChange={(e) => setUsername(e.target.value)}/>
+                    <InputBox placeholder={"First Name"} onChange={(e) => setFirstName(e.target.value)}/>
+                    <InputBox placeholder={"Last Name"} onChange={(e) => setLastname(e.target.value)}/>
+                    <InputBox placeholder={"Password"} onChange={(e) => setPassword(e.target.value)}/>
+                </div>
+                <div>
+                    <Button title={'Sign up'} onClick={handleSubmit}/>
+                    <ToastContainer />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Signup;

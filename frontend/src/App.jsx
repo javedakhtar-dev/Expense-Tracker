@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Dashboard from "./pages/Dashboard"
-import Authentication from "./pages/Authentication"
 import Transactions from "./pages/Transactions"
 import AddTransaction from "./pages/AddTransaction"
 import Profile from "./pages/Profile"
 import Settings from "./pages/Settings"
 import NotFound from "./pages/NotFound"
+import Signin from "./pages/Signin"
+import Signup from "./pages/Signup"
 
 function App() {
 
@@ -14,8 +15,8 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Authentication action={'login'} />} />
-        <Route path="/signup" element={<Authentication action={'signup'} />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/transactions/new" element={<AddTransaction />} />
         <Route path="/profile" element={<Profile />} />

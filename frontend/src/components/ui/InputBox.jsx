@@ -4,7 +4,7 @@ const InputBox = ({placeholder, onChange}) => {
         type="text" 
         placeholder={placeholder} 
         onChange={onChange}
-        className=""
+        className="border border-slate-200 focus:border-none p-2"
         />
     )
 }

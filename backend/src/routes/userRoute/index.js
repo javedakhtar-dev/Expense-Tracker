@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require('express');
 const authMiddleware = require("../../middleware/authMiddleware");
 const { userSignup, userSignin, updateProfile, updatePassword } = require('../../utils/types');
-const User = require('../../config/db');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
+const { User } = require("../../config/db");
 const router = express.Router();
 
 router.use(express.json())
@@ -49,6 +49,7 @@ router.post('/signup', async (req, res) => {
             token
         })
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             error: 'Something went wrong'
         })
