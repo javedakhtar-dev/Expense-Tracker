@@ -7,6 +7,7 @@ import Settings from "./pages/Settings"
 import NotFound from "./pages/NotFound"
 import Signin from "./pages/Signin"
 import Signup from "./pages/Signup"
+import ProtectedRoute from "./components/ui/ProtectedRoute"
 
 function App() {
 
@@ -14,14 +15,16 @@ function App() {
     <>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/transactions" element={<Transactions />} />
-        <Route path="/transactions/new" element={<AddTransaction />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/*" element={<NotFound />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transactions/new" element={<AddTransaction />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/*" element={<NotFound />} />
+        </Route>
       </Routes>
       </BrowserRouter>
     </>
