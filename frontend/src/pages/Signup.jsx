@@ -12,8 +12,7 @@ const Signup = () => {
     const [lastName, setLastname] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const notify = () => toast.success("User created successfully!");
-    const notifyField = () => toast.error("Something's up!")
+    const notify = () => toast.error("Something's up!")
 
     const handleSubmit = async () => {
         try {
@@ -24,13 +23,11 @@ const Signup = () => {
                 password
             })
             .then(() => {
-                notify();
                 localStorage.setItem('token', res.data.token);
-                localStorage.setItem('username', res.data.firstName);
                 navigate('/');
             })
         } catch (err) {
-            notifyField();
+            notify();
             console.log(err);
 
         }

@@ -4,13 +4,15 @@ import { toast, ToastContainer } from "react-toastify";
 import api from "../services/api";
 import Button from "../components/ui/Button";
 import InputBox from "../components/ui/InputBox";
+import useAuth from "../hooks/useAuth";
 
 const Signin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useAuth();
+
     const navigate = useNavigate();
-    const notify = () => toast.success("User created successfully!");
-    const notifyField = () => toast.error("Something's up!")
+    const notify = () => toast.error("Something's up!")
 
     const handleSubmit = async () => {
         try {
@@ -18,19 +20,12 @@ const Signin = () => {
                 username,
                 password
             })
-            .then((res) => {
-                notify();
-                localStorage.setItem('token', res.data.token);
-                localStorage.setItem('firstName', res.data.firstName);
-                navigate('/')
-            })
-
+            login(res.data.token)
+            navigate('/');
         } catch (err) {
-            notifyField();
+            notify();
             console.log(err);
-
         }
-        
     }
 
     return (
