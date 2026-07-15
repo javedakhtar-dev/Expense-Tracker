@@ -45,7 +45,6 @@ router.post('/signup', async (req, res) => {
         const token = 'Bearer ' + jwtToken; 
 
         return res.json({
-            firstName,
             token
         })
     } catch (err) {
@@ -89,8 +88,6 @@ router.post('/signin', async (req, res) => {
         
         const token = "Bearer " + jwtToken;
         return res.json({
-            msg: "Logged in successfully",
-            firstName: user.firstName,
             token: token
         });
     } catch (err) {

@@ -56,11 +56,11 @@ const AddTransactionModal = ({close, refreshDashboard }) => {
     });
 
     return (
-        <div>
-            <div>
+        <div className="relative p-10 border border-slate-200 rounded-xl flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
                 <InputBox placeholder={'Title'} isRequired={true} onChange={(e) => setTitle(e.target.value)}/>
                 <InputBox placeholder={'Amount'} isRequired={true} onChange={(e) => setAmount(e.target.value)}/>
-                <select name="Category" id="category" onChange={(e) => setCategory(e.target.value)} className="border-slate-200">
+                <select name="Category" id="category" onChange={(e) => setCategory(e.target.value)} className="border border-slate-200 rounded focus:border-none p-2">
                     <option value="">--Select Category--</option>
                     <option value="Food">Food</option>
                     <option value="Transport">Transport</option>
@@ -70,7 +70,7 @@ const AddTransactionModal = ({close, refreshDashboard }) => {
                     <option value="Salary">Salary</option>
                     <option value="Other">Other</option>
                 </select>
-                <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
+                <select name="type" id="type" onChange={(e) => setType(e.target.value)} className="border border-slate-200 rounded focus:border-none p-2">
                     <option value="">--Select Type--</option>
                     <option value="income">Income</option>
                     <option value="expense">Expense</option>
@@ -78,7 +78,7 @@ const AddTransactionModal = ({close, refreshDashboard }) => {
                 <InputBox inputType={'date'} placeholder={'Date'} isRequired={true} onChange={(e) => setDate(e.target.value)}/>
                 <InputBox placeholder={'Note'} isRequired={true} onChange={(e) => setNote(e.target.value)}/>
             </div>
-            <div>
+            <div className="flex justify-between">
                 <Button title={'Cancel'} onClick={close}/>
                 <Button title={'Save Transaction'} onClick={handleSubmit} isDisabled={isDisable}/>
             </div>

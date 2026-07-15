@@ -5,7 +5,7 @@ const InputBox = ({placeholder, onChange, isRequired, inputType}) => {
         placeholder={placeholder} 
         onChange={onChange}
         required={isRequired}
-        className="border border-slate-200 focus:border-none p-2"
+        className="border border-slate-200 focus:border-none p-2 rounded" 
         />
     )
 }

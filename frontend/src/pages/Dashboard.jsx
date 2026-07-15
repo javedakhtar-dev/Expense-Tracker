@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useAuth from './../hooks/useAuth'
 import api from '../services/api'
 import TransactionCard from '../components/ui/TransactionCard'
@@ -14,6 +15,7 @@ const Dashboard = () => {
         totalExpense: 0,
         transactions: []
     });
+    const navigate = useNavigate();
 
     const dashboardData = async () => {
         const response = await api.get('/dashboard', {
@@ -29,21 +31,24 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div>
+        <div className='border border-slate-200 p-5 m-2 rounded-lg flex flex-col gap-5'>
             <div>
-                <div>Hello, {user.firstName}!</div>
+                <div className='font-black text-2xl'>Hello, {user.firstName}!</div>
             </div>
-            <div>
-                <div>Total Balance: {dashboardInfo.balance}</div>
-                <div>Total Income: {dashboardInfo.totalIncome}</div>
-                <div>Total Expense: {dashboardInfo.totalExpense}</div>
+            <div className='border border-slate-200 p-3 rounded-lg flex flex-col gap-3'>
+                <div className={`font-bold text-xl`}>Total Balance: <span className={`${dashboardInfo.balance < 1 && 'text-red-600'}`}>{dashboardInfo.balance}</span></div>
+                <div>Total Income: <span className='text-green-600'>{dashboardInfo.totalIncome}</span></div>
+                <div>Total Expense: <span className='text-red-600'>{dashboardInfo.totalExpense}</span></div>
             </div>
             {showModal && (
                 <AddTransactionModal close={() => setShowModal(false)} refreshDashboard={dashboardData}/>
             )}
-            <div>
-                <div>Recent Transactions</div>
-                <div className='flex flex-col gap-3 p-5'>
+            <div className='border border-slate-200 p-5 rounded-lg flex flex-col gap-5'>
+                <div className='flex justify-between items-center'>
+                    <div className='font-bold text-xl'>Recent Transactions</div>
+                    <div onClick={() => navigate('/transactions')} className='cursor-pointer underline'>View all</div>
+                </div>
+                <div className='flex flex-col gap-3'>
                     {dashboardInfo.transactions.map((transaction) => <TransactionCard key={transaction._id} transaction={transaction}/>)}
                 </div>
             </div>

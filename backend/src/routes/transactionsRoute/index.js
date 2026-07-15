@@ -94,14 +94,14 @@ router.get('/', async (req, res) => {
     const skipTransaction = ( onPage - 1 ) * limitTransaction;
 
     try {
-        const filteredTransaction = await Expense.find(filter).sort(sortTransaction).skip(skipTransaction).limit(limitTransaction);
+        const transactions = await Expense.find(filter).sort(sortTransaction).skip(skipTransaction).limit(limitTransaction);
         const totalTransactions = await Expense.countDocuments(filter)
         const totalPages = Math.ceil(totalTransactions / limitTransaction);
         return res.json({
-            filteredTransaction,
+            transactions,
             page: onPage,
             limit: limitTransaction,
-            count: filteredTransaction.length,
+            count: transactions.length,
             totalPages,
             totalTransactions
         })
