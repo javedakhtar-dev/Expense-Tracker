@@ -78,15 +78,15 @@ router.get('/', async (req, res) => {
     const sortTransaction = {}
 
     if(sort == 'newest') {
-        sortTransaction.createdAt = -1
+        sortTransaction.date = -1
     } else if(sort == 'oldest') {
-        sortTransaction.createdAt = 1
+        sortTransaction.date = 1
     } else if(sort == 'highest') {
         sortTransaction.amount = -1
     } else if(sort == 'lowest') {
         sortTransaction.amount = 1
     } else {
-        sortTransaction.createdAt = -1
+        sortTransaction.date = -1
     }
     const onPage = Math.max(parseInt(page) || 1, 1);
     const limitTransaction = Math.min(Math.max(parseInt(limit) || 5, 5), 100);

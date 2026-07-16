@@ -20,7 +20,7 @@ const Signin = () => {
                 username,
                 password
             })
-            login(res.data.token)
+            await login(res.data.token)
             navigate('/');
         } catch (err) {
             notify();

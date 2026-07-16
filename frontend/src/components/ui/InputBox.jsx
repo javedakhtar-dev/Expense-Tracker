@@ -1,6 +1,7 @@
-const InputBox = ({placeholder, onChange, isRequired, inputType}) => {
+const InputBox = ({placeholder, onChange, isRequired, inputType, value}) => {
     return (
         <input 
+        value={value}
         type={inputType || "text" }
         placeholder={placeholder} 
         onChange={onChange}

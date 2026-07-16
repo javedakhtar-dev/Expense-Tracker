@@ -8,12 +8,14 @@ import NotFound from "./pages/NotFound"
 import Signin from "./pages/Signin"
 import Signup from "./pages/Signup"
 import ProtectedRoute from "./components/ui/ProtectedRoute"
+import Navbar from "./components/ui/Navbar"
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
+        <Navbar />
       <Routes>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
