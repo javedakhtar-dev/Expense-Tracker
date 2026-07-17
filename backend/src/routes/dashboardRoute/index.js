@@ -18,8 +18,8 @@ router.get('/', async (req, res) => {
             amount: true,
             type: true
         }).sort({
-            createdAt: -1
-        })
+            date: -1
+        }).limit(5);
 
         transactions.map((transaction) => {
             if(transaction.type == 'expense'){

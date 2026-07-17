@@ -29,8 +29,8 @@ const Signin = () => {
     }
 
     return (
-        <div className="flex justify-center items-center w-full h-screen">
-            <div className="p-20 rounded-lg border border-slate-200 shadow-xs text-center flex flex-col gap-5">
+        <div className="flex justify-center items-center w-full h-[90vh]">
+            <div className="p-10 rounded-lg border border-slate-200 shadow-xs text-center flex flex-col gap-5 min-w-sm">
                 <div>
                     <div className="text-2xl font-bold">Login</div>
                     <div className="text-slate-600">Login to proceed</div>
@@ -43,6 +43,7 @@ const Signin = () => {
                     <Button title={'Login'} onClick={handleSubmit}/>
                     <ToastContainer />
                 </div>
+                <div>Doesn't have an account? <span className="text-sky-500 cursor-pointer" onClick={() => navigate('/signup')}>Signup</span></div>
             </div>
         </div>
     )

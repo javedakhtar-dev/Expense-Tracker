@@ -126,7 +126,12 @@ const Transactions = () => {
             </div>
             <div>
                 {showModal && (
-                    <AddTransactionModal close={() => setShowModal(false)} refreshTransactions={fetchTransactions} mode={mode} transaction={selectedTransaction}/>
+                    <div>
+                        <div className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
+                        <div className="fixed inset-x-130 flex justify-center items-center z-50">
+                            <AddTransactionModal close={() => setShowModal(false)} refreshTransactions={fetchTransactions} mode={mode} transaction={selectedTransaction}/>
+                        </div>
+                    </div>
                 )}
                 {loading ? (
                     <div>Fetching transactions...</div>
@@ -179,7 +184,7 @@ const Transactions = () => {
                         >{index+1}</div>
                     )
                 )}
-                {page != transactionsData.totalPages && <div 
+                {page != transactionsData.totalPages || transactionsData.count > 5 && <div 
                 className="border cursor-pointer text-slate-900 text-center rounded-lg hover:bg-slate-900 hover:text-white transition-all p-1 font-bold"
                 onClick={() => setPage(page + 1)}>Next</div>}
             </div>

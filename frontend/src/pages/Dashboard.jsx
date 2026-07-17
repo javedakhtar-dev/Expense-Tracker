@@ -5,6 +5,7 @@ import api from '../services/api'
 import TransactionCard from '../components/ui/TransactionCard'
 import Button from '../components/ui/Button'
 import AddTransactionModal from '../components/ui/AddTransactionModal'
+import { ToastContainer } from 'react-toastify'
 
 const Dashboard = () => {
     const { user, logout } = useAuth()
@@ -31,19 +32,25 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div className='border border-slate-200 p-5 m-2 rounded-lg flex flex-col gap-5'>
-            <div className='flex justify-between items-between'>
+        <div className='border border-slate-200 p-5 m-2 rounded-lg flex flex-col gap-3'>
+            <div className='flex justify-between items-center'>
                 <div className='font-black text-2xl'>Hello, {user.firstName}!</div>
                 <Button title={'Logout'} onClick={logout}/>
             </div>
+            <ToastContainer />
+            {showModal && (
+                <div>
+                    <div className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm" onClick={() => setShowModal(false)}></div>
+                    <div className="fixed inset-x-130 flex justify-center items-center z-50">
+                        <AddTransactionModal close={() => setShowModal(false)} refreshDashboard={dashboardData} mode={'add'}/>
+                    </div>
+                </div>
+            )}
             <div className='border border-slate-200 p-3 rounded-lg flex flex-col gap-3'>
                 <div className={`font-bold text-xl`}>Total Balance: <span className={`${dashboardInfo.balance < 1 && 'text-red-600'}`}>{dashboardInfo.balance}</span></div>
                 <div>Total Income: <span className='text-green-600'>{dashboardInfo.totalIncome}</span></div>
                 <div>Total Expense: <span className='text-red-600'>{dashboardInfo.totalExpense}</span></div>
             </div>
-            {showModal && (
-                <AddTransactionModal close={() => setShowModal(false)} refreshDashboard={dashboardData} mode={'add'}/>
-            )}
             <div className='border border-slate-200 p-5 rounded-lg flex flex-col gap-5'>
                 <div className='flex justify-between items-center'>
                     <div className='font-bold text-xl'>Recent Transactions</div>

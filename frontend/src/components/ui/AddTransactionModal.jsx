@@ -3,6 +3,7 @@ import Button from "./Button"
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import api from "../../services/api";
+import { ImCross } from "react-icons/im";
 
 const AddTransactionModal = ({close, refreshDashboard, refreshTransactions, mode, transaction}) => {
     const [title, setTitle] = useState("");
@@ -91,7 +92,9 @@ const AddTransactionModal = ({close, refreshDashboard, refreshTransactions, mode
     }
 
     return (
-        <div className="relative p-10 border border-slate-200 rounded-xl flex flex-col gap-5">
+        <div className="relative p-10 border border-slate-200 rounded-xl flex flex-col gap-5 bg-white">
+            <div className="absolute top-5 right-5 cursor-pointer" onClick={close}><ImCross /></div>
+            <div className="font-bold text-2xl text-center">{mode === 'add' ? "Add" : "Update"} Transaction</div>
             <div className="flex flex-col gap-3">
                 <InputBox placeholder={'Title'} isRequired={true} onChange={(e) => setTitle(e.target.value)} value={title}/>
                 <InputBox placeholder={'Amount'} isRequired={true} onChange={(e) => setAmount(e.target.value)} value={amount}/>
@@ -114,7 +117,7 @@ const AddTransactionModal = ({close, refreshDashboard, refreshTransactions, mode
                 <InputBox inputType={'date'} placeholder={'Date'} isRequired={true} onChange={(e) => setDate(e.target.value)} value={date}/>
                 <InputBox placeholder={'Note'} isRequired={true} onChange={(e) => setNote(e.target.value)} value={note}/>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-5">
                 <Button title={'Cancel'} onClick={close}/>
                 <Button title={'Save Transaction'} onClick={handleSubmit} isDisabled={isDisable}/>
             </div>
