@@ -98,7 +98,7 @@ Expense-Tracker
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/expense-tracker.git
+git clone https://github.com/javedakhtar-dev/Expense-Tracker.git
 ```
 
 ```bash
